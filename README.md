@@ -46,16 +46,16 @@ id=
 
 ## usage
 
-**step 1**  
+### step 1
 fully write configs you need
 
-**step 2**  
+### step 2
 then run
 ```bash
 bash scrpit.sh
 ```
 
-**step 3**  
+### step 3
 you will meet  
 `are you want to use Dynamic DNS ?`
 
@@ -65,7 +65,7 @@ you have two choices:
 
 input 1 or 2 then press enter
 
-**step 3**  
+### step 4
 you will meet  
 `select required service :`
 
@@ -85,7 +85,8 @@ the script requires this following :
 - root
 - cat
 - curl
-- ca-certificates  
+- ca-certificates
+
 this function will install `curl and ca-certificates`  
 if you have not installed this, you should run this.
 
