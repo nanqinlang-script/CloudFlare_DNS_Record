@@ -44,8 +44,6 @@ ttl=
 id=
 ```
 
-## usage
-
 ### step 1
 fully write configs you need
 
