@@ -14,7 +14,7 @@ the following is the way to use this scrpit
 you should write your config to `config.conf`  
 and just write what you need
 
-```conf
+```python
 # just write what you need
 
 # the email address of your cloudflare account
