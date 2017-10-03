@@ -1,8 +1,8 @@
 # CloudFlare_DNSRecord_Modifier
-[![Build Status](https://github.com/SuzukazeAoran/SVG/blob/master/build%20passing.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
-[![language](https://github.com/SuzukazeAoran/SVG/blob/master/language-shell-blue.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
-[![author](https://github.com/SuzukazeAoran/SVG/blob/master/author-nanqinlang-lightgrey.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
-[![license](https://github.com/SuzukazeAoran/SVG/blob/master/license-GNU3.0-orange.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
+[![Build Status](https://github.com/nanqinlang/SVG/blob/master/build%20passing.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
+[![language](https://github.com/nanqinlang/SVG/blob/master/language-shell-blue.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
+[![author](https://github.com/nanqinlang/SVG/blob/master/author-nanqinlang-lightgrey.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
+[![license](https://github.com/nanqinlang/SVG/blob/master/license-GPLv3-orange.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
 
 A convenient script to modify DNS Record in [CloudFlare](https://www.cloudflare.com)
 
@@ -44,16 +44,18 @@ ttl=
 id=
 ```
 
-### step 1
+## usage
+
+**step 1**  
 fully write configs you need
 
-### step 2
+**step 2**  
 then run
 ```bash
 bash scrpit.sh
 ```
 
-### step 3
+**step 3**  
 you will meet  
 `are you want to use Dynamic DNS ?`
 
@@ -63,7 +65,7 @@ you have two choices:
 
 input 1 or 2 then press enter
 
-### step 4
+**step 3**  
 you will meet  
 `select required service :`
 
@@ -83,8 +85,7 @@ the script requires this following :
 - root
 - cat
 - curl
-- ca-certificates
-
+- ca-certificates  
 this function will install `curl and ca-certificates`  
 if you have not installed this, you should run this.
 
