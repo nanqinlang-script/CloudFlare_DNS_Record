@@ -1,8 +1,8 @@
 # CloudFlare_DNSRecord_Modifier
-[![Build Status](https://github.com/nanqinlang/SVG/blob/master/build%20passing.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
-[![language](https://github.com/nanqinlang/SVG/blob/master/language-shell-blue.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
-[![author](https://github.com/nanqinlang/SVG/blob/master/author-nanqinlang-lightgrey.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
-[![license](https://github.com/nanqinlang/SVG/blob/master/license-GPLv3-orange.svg)](https://github.com/nanqinlang/CloudFlare_DNSRecord_Modifier)
+[![Build Status](https://github.com/nanqinlang/SVG/blob/master/build%20passing.svg)](https://github.com/nanqinlang-script/CloudFlare_DNSRecord_Modifier)
+[![language](https://github.com/nanqinlang/SVG/blob/master/language-shell-blue.svg)](https://github.com/nanqinlang-script/CloudFlare_DNSRecord_Modifier)
+[![author](https://github.com/nanqinlang/SVG/blob/master/author-nanqinlang-lightgrey.svg)](https://github.com/nanqinlang-script/CloudFlare_DNSRecord_Modifier)
+[![license](https://github.com/nanqinlang/SVG/blob/master/license-GPLv3-orange.svg)](https://github.com/nanqinlang-script/CloudFlare_DNSRecord_Modifier)
 
 A convenient script to modify DNS Record in [CloudFlare](https://www.cloudflare.com)
 
@@ -90,7 +90,8 @@ this function will install `curl and ca-certificates`
 if you have not installed this, you should run this.
 
 ## according
+中文文档  
+https://sometimesnaive.org/article/webfield/cloudflare/dynamic-dns-and-operation-api
 
-中文文档 ： https://www.nanqinlang.com/shell-CloudFlare_DNSRecord_Modifier.html
-
-Cloudflare API documentation v4 : https://api.cloudflare.com/#zone-properties
+Cloudflare API documentation v4  
+https://api.cloudflare.com/#zone-properties
