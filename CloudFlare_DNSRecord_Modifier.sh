@@ -4,8 +4,8 @@ Info="${Green_font}[Info]${Font_suffix}"
 Error="${Red_font}[Error]${Font_suffix}"
 echo -e "${Green_font}
 #=======================================
-# Project: CloudFlare_DDNS_Keeper
-# Version: 1.0
+# Project: CloudFlare_DNSRecord_Modifier
+# Version: 1.1
 # Author: nanqinlang
 # Blog:   https://sometimesnaive.org
 # Github: https://github.com/nanqinlang
@@ -31,8 +31,8 @@ check_system(){
 }
 
 directory(){
-	[[ ! -d /home/CloudFlare_DDNS ]] && echo -e "${Error} can not found config directory, please check !" && exit 1
-	cd /home/CloudFlare_DDNS
+	[[ ! -d /home/CloudFlare_DNSRecord_Modifier ]] && echo -e "${Error} can not found config directory, please check !" && exit 1
+	cd /home/CloudFlare_DNSRecord_Modifier
 }
 
 define(){
@@ -44,6 +44,7 @@ define(){
 
 	domain=`cat config.conf | grep "domain" | awk -F "=" '{print $NF}'`
 
+	required_ip=`cat config.conf | grep "required_ip" | awk -F "=" '{print $NF}'`
 	dynamic_ip=`curl ip.sb`
 
 	ttl=`cat config.conf | grep "ttl" | awk -F "=" '{print $NF}'`
@@ -61,6 +62,24 @@ choose_service(){
 	done
 
 	[[ "${service}" = "1" ]] && get_record_id
+	[[ "${service}" = "2" ]] && choose_dynamic
+	[[ "${service}" = "3" ]] && choose_dynamic
+}
+
+choose_dynamic(){
+	echo -e "${Info} are you want to use a Dynamic DNS ?"
+	echo -e "${Info} select: 1.yes 2.no"
+	read -p "(input 1 or 2 to select):" dynamic
+
+	while [[ ! "${dynamic}" =~ ^[1-2]$ ]]
+	do
+		echo -e "${Error} invalid input !"
+		echo -e "${Info} select: 1.yes 2.no" && read -p "(input 1 or 2 to select):" dynamic
+	done
+
+	[[ "${dynamic}" = "1" ]] && ip="${dynamic_ip}"
+	[[ "${dynamic}" = "2" ]] && ip="${required_ip}"
+
 	[[ "${service}" = "2" ]] && update_record
 	[[ "${service}" = "3" ]] && create_record
 }
@@ -77,7 +96,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records/$
 	 -H "X-Auth-Email: ${email}" \
 	 -H "X-Auth-Key: ${api_key}" \
 	 -H "Content-Type: application/json" \
-	 --data '{"type":"A", "name":"'${domain}'", "content":"'${dynamic_ip}'", "ttl":'${ttl}', "proxied":false}'
+	 --data '{"type":"A", "name":"'${domain}'", "content":"'${ip}'", "ttl":'${ttl}', "proxied":false}'
 }
 
 create_record(){
@@ -85,7 +104,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records"
 	 -H "X-Auth-Email: ${email}" \
 	 -H "X-Auth-Key: ${api_key}" \
 	 -H "Content-Type: application/json" \
-	 --data '{"type":"A", "name":"'${domain}'", "content":"'${dynamic_ip}'", "ttl":'${ttl}', "proxied":false}'
+	 --data '{"type":"A", "name":"'${domain}'", "content":"'${ip}'", "ttl":'${ttl}', "proxied":false}'
 }
 
 
