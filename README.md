@@ -47,7 +47,7 @@ ttl=
 ```
 
 take a example, you should write like this:
-```python
+```c
 email=example@gmail.com
 zone_id=2736dff127f14ff4ae263ef35esd060f
 api_key=84058228se28e28898b6ds3ej78yuf2136654
