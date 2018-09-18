@@ -30,10 +30,6 @@ zone_id=
 # the api key of your cloudflare account
 api_key=
 
-# the id of domain record you want to modify
-# this id can be find via "get domain record_id" selection in the script
-record_id=
-
 # the domain you want to set
 domain=
 
@@ -41,6 +37,12 @@ domain=
 # min value:120
 # max value:2147483647
 ttl=
+
+# the id of domain record you want to modify
+# you can't see it before run this script
+# this id can be added automatically via "get domain record_id" selection in the script
+record_id=
+
 ```
 
 take a example, you should write like this:
@@ -49,7 +51,6 @@ email=example@gmail.com
 zone_id=3456dfdhfi465ff4ae263ef35esd060f
 api_key=84058228se28e28898b6ds3ej78yuf2136654
 
-record_id=1d3a9b54623334f3debc20c56eb5585c
 domain=example.example.net
 ttl=120
 ```
@@ -61,6 +62,8 @@ write those config down:
 - email
 - zone_id
 - api_key
+- domain
+- ttl
 
 ### step 2
 then run
@@ -70,24 +73,19 @@ bash CloudFlare_DDNS_Setter.sh
 and you will meet `select required service :`
 
 1.**get domain record_id**  
-this function will list all your dns records  
-you should get the id of a dns record from the list and write it down to `record_id` in the config file  
+this function will get the record_id of your domain and insert it into config file automatically
 
 2.**create new domain record**  
 this function can create a new A dns record
 
-### step 3
-continuously write those config down:
-- record_id
-- domain
-- ttl
 
-### step 4
-after you finished step 1~3, you will need to run this :
+### step 3
+after you finished step 1~2, you will need to run this :
 ```bash
 bash CloudFlare_DDNS_Setter.sh --ddns
 ```
 for above, the parameter `--ddns` is to update your dns A record to refresh your ddns. Freely let it automatically via such as `crontab`.
+this script have already added a record that is `*/3 * * * * bash CloudFlare_DDNS_Setter.sh --ddns` to `/var/spool/cron/root`,and you can use `crontab -e` to modify it.
 
 ## according
 中文文档  
