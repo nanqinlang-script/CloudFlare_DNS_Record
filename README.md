@@ -38,7 +38,7 @@ domain=
 ttl=
 
 # the id of domain record you want to modify
-# you can't see it before run this script
+# you can't see it before ran this script
 # this id can be added automatically via "get domain record_id" selection in the script
 record_id=
 
