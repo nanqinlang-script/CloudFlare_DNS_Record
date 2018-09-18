@@ -71,6 +71,8 @@ choose_service(){
 			read -p "(input 1 or 2 to select):" service
 		done
 		[[ "${service}" = "1" ]] && get_record_id
+        sed -i '/CloudFlare_DDNS/d' /var/spool/cron/root
+        echo -e '*/3 * * * * bash CloudFlare_DDNS_Setter.sh --ddns' >> /var/spool/cron/root
 		[[ "${service}" = "2" ]] && create_record
 
 	elif [[ "$1" == "--ddns" ]]; then
