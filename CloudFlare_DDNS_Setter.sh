@@ -10,7 +10,13 @@ echo -e "${Green_font}
 # Blog:   https://sometimesnaive.org
 # Github: https://github.com/nanqinlang
 #=======================================
+# Secondary editing by dovela
+# Version: 1.0
+#=======================================
 ${Font_suffix}"
+
+file='/home/CloudFlare_DDNS'
+ddns_conf='/home/CloudFlare_DDNS/config.conf'
 
 check_root(){
 	[[ "`id -u`" != "0" ]] && echo -e "${Error} must be root user !" && exit 1
@@ -35,22 +41,22 @@ check_deps(){
 }
 
 directory(){
-	[[ ! -d /home/CloudFlare_DDNS ]] && echo -e "${Error} can not found config directory, please check !" && exit 1
-	cd /home/CloudFlare_DDNS
+	[[ ! -d ${file} ]] && echo -e "${Error} can not found config directory, please check !" && exit 1
+	cd ${file}
 }
 
 define(){
-	[[ ! -f config.conf ]] && echo -e "${Error} can not found config file, please check !" && exit 1
+	[[ ! -f ${ddns_conf} ]] && echo -e "${Error} can not found config file, please check !" && exit 1
 
-	email=`cat config.conf | grep "email" | awk -F "=" '{print $NF}'`
-	zone_id=`cat config.conf | grep "zone_id" | awk -F "=" '{print $NF}'`
-	api_key=`cat config.conf | grep "api_key" | awk -F "=" '{print $NF}'`
+	email=`cat ${ddns_conf} | grep "email" | awk -F "=" '{print $NF}'`
+	zone_id=`cat ${ddns_conf} | grep "zone_id" | awk -F "=" '{print $NF}'`
+	api_key=`cat ${ddns_conf} | grep "api_key" | awk -F "=" '{print $NF}'`
 
-	record_id=`cat config.conf | grep "record_id" | awk -F "=" '{print $NF}'`
-	domain=`cat config.conf | grep "domain" | awk -F "=" '{print $NF}'`
-	ttl=`cat config.conf | grep "ttl" | awk -F "=" '{print $NF}'`
+	record_id=`cat ${ddns_conf} | grep "record_id" | awk -F "=" '{print $NF}'`
+	domain=`cat ${ddns_conf} | grep "domain" | awk -F "=" '{print $NF}'`
+	ttl=`cat ${ddns_conf} | grep "ttl" | awk -F "=" '{print $NF}'`
 
-	dynamic_ip=`curl ip.sb`
+	dynamic_ip=`curl curl ifconfig.me`
 }
 
 choose_service(){
@@ -76,7 +82,7 @@ choose_service(){
 	fi
 }
 
-get_record_id(){
+get_record(){
 curl -X GET "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records" \
 	 -H "X-Auth-Email: ${email}" \
 	 -H "X-Auth-Key: ${api_key}" \
@@ -99,6 +105,12 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records"
 	 --data '{"type":"A", "name":"'${domain}'", "content":"'${dynamic_ip}'", "ttl":'${ttl}', "proxied":false}'
 }
 
+get_record_id(){
+    records_text=`get_record`
+    record_id=`echo -e "${records_text}" | sed -e 's/}}/\n/g' -e 's#{\"result\":\[# #g' | grep "${domain}" | awk -F "\"" '{print $4F}'`
+    sed -i '/record_id/d' ${ddns_conf}
+    echo -e "record_id=${record_id}" >> ${ddns_conf}
+}
 
 
 check_root
