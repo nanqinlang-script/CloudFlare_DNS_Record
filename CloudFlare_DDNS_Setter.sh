@@ -56,7 +56,7 @@ define(){
 	domain=`cat ${ddns_conf} | grep "domain" | awk -F "=" '{print $NF}'`
 	ttl=`cat ${ddns_conf} | grep "ttl" | awk -F "=" '{print $NF}'`
 
-	dynamic_ip=`curl ifconfig.me`
+	dynamic_ip=`curl ipv4.ip.sb`
 }
 
 choose_service(){
