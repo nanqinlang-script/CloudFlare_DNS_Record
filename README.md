@@ -10,7 +10,7 @@ Script to set DDNS Record via [CloudFlare](https://www.cloudflare.com)
 ## download
 ```bash
 mkdir /home/CloudFlare_DDNS
-wget https://raw.githubusercontent.com/dovela/CloudFlare_DNS_Record/Setter/config.conf /home/CloudFlare_DDNS
+wget https://raw.githubusercontent.com/dovela/CloudFlare_DNS_Record/Setter/config.conf /home/CloudFlare_DDNS/config.conf
 wget https://raw.githubusercontent.com/dovela/CloudFlare_DNS_Record/Setter/CloudFlare_DDNS_Setter.sh
 ```
 
