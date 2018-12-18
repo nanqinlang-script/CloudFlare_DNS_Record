@@ -11,7 +11,7 @@ echo -e "${Green_font}
 # Github: https://github.com/nanqinlang
 #=======================================
 # Secondary editing by dovela
-# Version: 1.0
+# Version: 1.1
 #=======================================
 ${Font_suffix}"
 
@@ -24,6 +24,13 @@ check_root(){
 
 check_system(){
 	[[ -z "`cat /etc/issue | grep -E -i "debian"`" && -z "`cat /etc/issue | grep -E -i "ubuntu"`" && -z "`cat /etc/redhat-release | grep -E -i "CentOS"`" ]] && echo -e "${Error} only support Debian or Ubuntu or CentOS !" && exit 1
+}
+
+check_ip_diff(){
+    remote_ip=`ping $domain -c 1 -W 1 | head -n 1 | awk '{print $3}' | sed 's/[()]//g'`
+    if [[ $remote_ip == $dynamic_ip ]]; then
+        exit 1
+    fi
 }
 
 check_deps(){
@@ -56,7 +63,7 @@ define(){
 	domain=`cat ${ddns_conf} | grep "domain" | awk -F "=" '{print $NF}'`
 	ttl=`cat ${ddns_conf} | grep "ttl" | awk -F "=" '{print $NF}'`
 
-	dynamic_ip=`curl ipv4.ip.sb`
+    dynamic_ip=`curl ipv4.ip.sb`
 }
 
 choose_service(){
@@ -76,6 +83,7 @@ choose_service(){
 		[[ "${service}" = "2" ]] && create_record
 
 	elif [[ "$1" == "--ddns" ]]; then
+        check_ip_diff
 		echo -e "${Info} now will start automatically ddns record updating service"
 		update_record
 
