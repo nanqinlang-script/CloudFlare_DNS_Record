@@ -115,8 +115,14 @@ https://sometimesnaive.org/article/5 (to be updated)
 Cloudflare API documentation v4  
 https://api.cloudflare.com/#zone-properties
 
-AWS Documentation
+AWS Documentation  
 https://docs.aws.amazon.com/index.html#lang/en_us
+
+屌鸡tg@Unknow000 ipcheck service  
+https://ipcheck.need.sh/
+
+皮皮虾窝  
+https://ppxwo.com/dynamicip.ppx
 
 ## notes
 *:you can get your AWSAccessKeyId and AWSSecretKey via [AWS Access keys](https://console.aws.amazon.com/iam/home#/security_credential). create new access key and save it.
