@@ -26,6 +26,7 @@ check_system(){
 	[[ -z "`cat /etc/issue | grep -E -i "debian"`" && -z "`cat /etc/issue | grep -E -i "ubuntu"`" && -z "`cat /etc/redhat-release | grep -E -i "CentOS"`" ]] && echo -e "${Error} only support Debian or Ubuntu or CentOS !" && exit 1
 }
 
+# 检查dns ip和本机ip是否不同，如果相同则直接退出脚本
 check_ip_diff(){
     dns_ip=`ping $domain -c 1 -W 1 | head -n 1 | awk '{print $3}' | sed 's/[()]//g'`
     if [[ $dns_ip == $local_ip ]]; then
@@ -82,7 +83,7 @@ choose_service(){
 		while [[ ! "${service}" =~ ^[1-2]$ ]]
 		do
 			echo -e "${Error} invalid input !"
-			read -p "(input 1 or 2 to select):" service
+			read -p "(input 1  or 2 to select):" service
 		done
 		[[ "${service}" = "1" ]] && get_record_id
         sed -i '/CloudFlare_DDNS/d' /var/spool/cron/root
@@ -90,7 +91,7 @@ choose_service(){
 		[[ "${service}" = "2" ]] && create_record
 
 	elif [[ "$1" == "--ddns" ]]; then
-        if [[ $lightsail_switic == true ]]; then
+        if [[ $lightsail_switich == true ]]; then
             lightsail_change_ip
         fi
         check_ip_diff
@@ -134,6 +135,7 @@ get_record_id(){
 
 Lightsail_deps(){
     pip install awscli --upgrade
+    clear
     echo -e '''
    ===============================
     北美: us-east-1 弗吉尼亚州
@@ -155,6 +157,7 @@ Lightsail_deps(){
 }
 
 lightsail_change_ip(){
+    #检查本机ip是否被tcp阻断
     tcp_status=`curl --silent https://ipcheck.need.sh/api_v2.php?ip=${local_ip}` | awk -F '[:}]' '{print $21}'
     
     if [[ $tcp_status == false ]]; then
@@ -164,6 +167,7 @@ lightsail_change_ip(){
     aws lightsail allocate-static-ip --static-ip-name ${lightsail_ipname} >/dev/null 2>&1
     # 绑定IP
     aws lightsail attach-static-ip --static-ip-name ${lightsail_ipname} --instance-name ${lightsail_instance} >/dev/null 2>&1
+    #待机15s以确保ip更换完毕
     sleep 15s
     fi
 }
