@@ -97,7 +97,7 @@ this function will get the record_id of your domain and insert it into config fi
 2.**create new domain record**  
 this function can create a new A dns record
 
-3.***configure lightsail if necessary**
+3.***configure lightsail if necessary**  
 this function is be used to configure AWS' access key and the location of local host
 
 ### step 3
