@@ -78,17 +78,18 @@ choose_service(){
 	if [[ -z "$1" ]]; then
 		echo -e "${Info} if you want a automatic ddns, firstly you should get record_id"
 		echo -e "${Info} alternatively you can use this script to create a A record and get its id"
-		echo -e "${Info} now select required service:\n1.get domain record_id\n2.create a new domain A record"
-		read -p "(input 1 or 2 to select):" service
-		while [[ ! "${service}" =~ ^[1-2]$ ]]
+		echo -e "${Info} now select required service:\n1.get domain record_id\n2.create a new domain A record\n3.configure lightsail"
+		read -p "(input 1~3 to select):" service
+		while [[ ! "${service}" =~ ^[1-3]$ ]]
 		do
 			echo -e "${Error} invalid input !"
-			read -p "(input 1  or 2 to select):" service
+			read -p "(input 1~3 to select):" service
 		done
 		[[ "${service}" = "1" ]] && get_record_id
         sed -i '/CloudFlare_DDNS/d' /var/spool/cron/root
         echo -e '*/3 * * * * bash CloudFlare_DDNS_Setter.sh --ddns' >> /var/spool/cron/root
 		[[ "${service}" = "2" ]] && create_record
+        [[ "${service}" = "3" ]] && Lightsail_conf
 
 	elif [[ "$1" == "--ddns" ]]; then
         if [[ $lightsail_switich == true ]]; then
@@ -133,7 +134,7 @@ get_record_id(){
     echo -e "record_id=${record_id}" >> ${ddns_conf}
 }
 
-Lightsail_deps(){
+Lightsail_conf(){
     pip install awscli --upgrade
     clear
     echo -e '''
