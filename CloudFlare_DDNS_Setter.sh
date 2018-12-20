@@ -176,7 +176,7 @@ lightsail_change_ip(){
 
 check_root
 check_system
-check_deps
+[[ "$1" = "install" ]] && check_deps
 directory
 define
 choose_service $1
