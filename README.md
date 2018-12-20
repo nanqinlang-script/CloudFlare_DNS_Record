@@ -42,6 +42,14 @@ ttl=
 # this id can be added automatically via "get domain record_id" selection in the script
 record_id=
 
+#"true" or "false",if local host is AWS' lightsail and you need replace ip automatically, please turn "true".
+lightsail_switich=false  
+
+#Created static ip's name of lightsail. Input anything you prefer.
+lightsail_ipname=
+
+#The name of the instance you already hold.It's like "CentOS-1GB-Tokyo-1"
+lightsail_instance=
 ```
 
 take a example, you should write like this:
@@ -52,6 +60,10 @@ api_key=84058228se28e28898b6ds3ej78yuf2136654
 
 domain=example.example.net
 ttl=120
+
+lightsail_switich=true  
+lightsail_ipname=ip-of-tokyo
+lightsail_instance=CentOS-1GB-Tokyo-1
 ```
 
 ## usage
@@ -63,8 +75,16 @@ write those config down:
 - api_key
 - domain
 - ttl
+- lightsail_switich (true or not）  
+- lightsail_ipname (if turn on)
+- lightsail_instance (if turn on)
 
 ### step 2
+if this is the first time the script is run
+```bash
+bash CloudFlare_DDNS_Setter.sh install
+```
+
 then run
 ```bash
 bash CloudFlare_DDNS_Setter.sh
@@ -77,6 +97,8 @@ this function will get the record_id of your domain and insert it into config fi
 2.**create new domain record**  
 this function can create a new A dns record
 
+3.***configure lightsail if necessary**
+this function is be used to configure AWS' access key and the location of local host
 
 ### step 3
 after you finished step 1~2, you will need to run this :
@@ -92,3 +114,9 @@ https://sometimesnaive.org/article/5 (to be updated)
 
 Cloudflare API documentation v4  
 https://api.cloudflare.com/#zone-properties
+
+AWS Documentation
+https://docs.aws.amazon.com/index.html#lang/en_us
+
+## notes
+*:you can get your AWSAccessKeyId and AWSSecretKey via [AWS Access keys](https://console.aws.amazon.com/iam/home#/security_credential). create new access key and save it.

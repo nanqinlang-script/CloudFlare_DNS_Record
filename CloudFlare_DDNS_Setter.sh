@@ -78,7 +78,7 @@ choose_service(){
 	if [[ -z "$1" ]]; then
 		echo -e "${Info} if you want a automatic ddns, firstly you should get record_id"
 		echo -e "${Info} alternatively you can use this script to create a A record and get its id"
-		echo -e "${Info} now select required service:\n1.get domain record_id\n2.create a new domain A record\n3.configure lightsail"
+		echo -e "${Info} now select required service:\n1.get domain record_id\n2.create a new domain A record\n3.configure lightsail if necessary"
 		read -p "(input 1~3 to select):" service
 		while [[ ! "${service}" =~ ^[1-3]$ ]]
 		do
@@ -154,7 +154,7 @@ Lightsail_conf(){
           ap-south-1 印度
    ===============================
     '''
-    aws configure #输入AWSAccessKeyId和AWSSecretKey以及本机地域,第四项留空，Key由 https://console.aws.amazon.com/iam/home?region=us-east-2#/security_credential 申请
+    aws configure #输入AWSAccessKeyId和AWSSecretKey以及本机地域,第四项留空，Key由 https://console.aws.amazon.com/iam/home#/security_credential 申请
 }
 
 lightsail_change_ip(){
@@ -176,7 +176,7 @@ lightsail_change_ip(){
 
 check_root
 check_system
-[[ "$1" = "install" ]] && check_deps
+[[ "$1" = "install" ]] && check_deps && exit 0
 directory
 define
 choose_service $1
