@@ -97,7 +97,7 @@ this function will get the record_id of your domain and insert it into config fi
 2.**create new domain record**  
 this function can create a new A dns record
 
-3.***configure lightsail if necessary**
+3.***configure lightsail if necessary**  
 this function is be used to configure AWS' access key and the location of local host
 
 ### step 3
@@ -110,13 +110,19 @@ this script have already added a record that is `*/3 * * * * bash CloudFlare_DDN
 
 ## according
 中文文档  
-https://sometimesnaive.org/article/5 (to be updated)
+https://blog.mcgrady.site/?p=75
 
 Cloudflare API documentation v4  
 https://api.cloudflare.com/#zone-properties
 
-AWS Documentation
+AWS Documentation  
 https://docs.aws.amazon.com/index.html#lang/en_us
+
+屌鸡tg@Unknow000 ipcheck service  
+https://ipcheck.need.sh/
+
+皮皮虾窝  
+https://ppxwo.com/dynamicip.ppx
 
 ## notes
 *:you can get your AWSAccessKeyId and AWSSecretKey via [AWS Access keys](https://console.aws.amazon.com/iam/home#/security_credential). create new access key and save it.
