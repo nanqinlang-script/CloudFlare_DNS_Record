@@ -92,7 +92,7 @@ choose_service(){
         [[ "${service}" = "3" ]] && Lightsail_conf
 
 	elif [[ "$1" == "--ddns" ]]; then
-        if [[ $lightsail_switich == true ]]; then
+        if [[ $lightsail_switich == "true" ]]; then
             lightsail_change_ip
         fi
         check_ip_diff
@@ -161,7 +161,7 @@ lightsail_change_ip(){
     #检查本机ip是否被tcp阻断
     tcp_status=`curl --silent https://ipcheck.need.sh/api_v2.php?ip=${local_ip}` | awk -F '[:}]' '{print $21}'
     
-    if [[ $tcp_status == false ]]; then
+    if [[ $tcp_status == "false" ]]; then
     # 删除现有静态IP
     aws lightsail release-static-ip --static-ip-name ${lightsail_ipname} >/dev/null 2>&1
     # 创建新IP
