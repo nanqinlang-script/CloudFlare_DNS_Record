@@ -110,7 +110,7 @@ this script have already added a record that is `*/3 * * * * bash CloudFlare_DDN
 
 ## according
 中文文档  
-https://sometimesnaive.org/article/5 (to be updated)
+https://blog.mcgrady.site/?p=75
 
 Cloudflare API documentation v4  
 https://api.cloudflare.com/#zone-properties
