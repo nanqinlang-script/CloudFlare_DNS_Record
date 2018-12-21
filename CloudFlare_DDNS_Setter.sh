@@ -59,19 +59,19 @@ directory(){
 define(){
 	[[ ! -f ${ddns_conf} ]] && echo -e "${Error} can not found config file, please check !" && exit 1
 
-	email=`cat ${ddns_conf} | grep "email" | awk -F "=" '{print $NF}'`
-	zone_id=`cat ${ddns_conf} | grep "zone_id" | awk -F "=" '{print $NF}'`
-	api_key=`cat ${ddns_conf} | grep "api_key" | awk -F "=" '{print $NF}'`
+	email=`cat ${ddns_conf} | grep "email" | awk -F "[ =]" '{print $2}'`
+	zone_id=`cat ${ddns_conf} | grep "zone_id" | awk -F "[ =]" '{print $2}'`
+	api_key=`cat ${ddns_conf} | grep "api_key" | awk -F "[ =]" '{print $2}'`
 
-	record_id=`cat ${ddns_conf} | grep "record_id" | awk -F "=" '{print $NF}'`
-	domain=`cat ${ddns_conf} | grep "domain" | awk -F "=" '{print $NF}'`
-	ttl=`cat ${ddns_conf} | grep "ttl" | awk -F "=" '{print $NF}'`
+	record_id=`cat ${ddns_conf} | grep "record_id" | awk -F "[ =]" '{print $2}'`
+	domain=`cat ${ddns_conf} | grep "domain" | awk -F "[ =]" '{print $2}'`
+	ttl=`cat ${ddns_conf} | grep "ttl" | awk -F "[ =]" '{print $2}'`
 
     local_ip=`curl ipv4.ip.sb`
     
-    lightsail_switich=`cat ${ddns_conf} | grep "lightsail_switich" | awk -F "=" '{print $NF}'`
-    lightsail_ipname=`cat ${ddns_conf} | grep "lightsail_ipname" | awk -F "=" '{print $NF}'`
-    lightsail_instance=`cat ${ddns_conf} | grep "lightsail_instance" | awk -F "=" '{print $NF}'`
+    lightsail_switich=`cat ${ddns_conf} | grep "lightsail_switich" | awk -F "[ =]" '{print $2}'`
+    lightsail_ipname=`cat ${ddns_conf} | grep "lightsail_ipname" | awk -F "[ =]" '{print $2}'`
+    lightsail_instance=`cat ${ddns_conf} | grep "lightsail_instance" | awk -F "[ =]" '{print $2}'`
 }
 
 choose_service(){
