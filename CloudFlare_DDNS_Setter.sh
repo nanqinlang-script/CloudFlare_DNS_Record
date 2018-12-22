@@ -30,7 +30,7 @@ check_system(){
 check_ip_diff(){
     dns_ip=`ping $domain -c 1 -W 1 | head -n 1 | awk '{print $3}' | sed 's/[()]//g'`
     if [[ $dns_ip == $local_ip ]]; then
-        exit 1
+        exit 0
     fi
 }
 
@@ -69,7 +69,7 @@ define(){
 
     local_ip=`curl ipv4.ip.sb`
     
-    lightsail_switich=`cat ${ddns_conf} | grep "lightsail_switich" | awk -F "[ =]" '{print $2}'`
+    lightsail_switch=`cat ${ddns_conf} | grep "lightsail_switch" | awk -F "[ =]" '{print $2}'`
     lightsail_ipname=`cat ${ddns_conf} | grep "lightsail_ipname" | awk -F "[ =]" '{print $2}'`
     lightsail_instance=`cat ${ddns_conf} | grep "lightsail_instance" | awk -F "[ =]" '{print $2}'`
 }
@@ -92,7 +92,7 @@ choose_service(){
         [[ "${service}" = "3" ]] && Lightsail_conf
 
 	elif [[ "$1" == "--ddns" ]]; then
-        if [[ $lightsail_switich == "true" ]]; then
+        if [[ $lightsail_switch == "true" ]]; then
             lightsail_change_ip
         fi
         check_ip_diff
@@ -105,7 +105,7 @@ choose_service(){
 }
 
 get_record(){
-curl -X GET "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records" \
+curl -X GET "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?type=A&name${domain}&order=name" \
 	 -H "X-Auth-Email: ${email}" \
 	 -H "X-Auth-Key: ${api_key}" \
 	 -H "Content-Type: application/json"
@@ -129,7 +129,10 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records"
 
 get_record_id(){
     records_text=`get_record`
-    record_id=`echo -e "${records_text}" | sed -e 's/}}/\n/g' -e 's#{\"result\":\[# #g' | grep "${domain}" | awk -F "\"" '{print $4F}'`
+    record_id=`echo -e "${records_text}" | awk -F "\"" '{print $6F}'`
+    if [[ ${#record_id} -ne 32 ]]; then
+        echo -e "${Error} check if your A record is correct !" && exit 1
+    fi
     sed -i '/record_id/d' ${ddns_conf}
     echo -e "record_id=${record_id}" >> ${ddns_conf}
 }
