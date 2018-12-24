@@ -11,7 +11,9 @@ echo -e "${Green_font}
 # Github: https://github.com/nanqinlang
 #=======================================
 # Secondary editing by dovela
-# Version: 2.1
+# Version: 2.1 beta
+# Github: https://github.com/dovela/CloudFlare_DNS_Record
+# If you find problems, plz submit issue
 #=======================================
 ${Font_suffix}"
 
