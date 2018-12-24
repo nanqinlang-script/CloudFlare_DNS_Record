@@ -11,7 +11,7 @@ echo -e "${Green_font}
 # Github: https://github.com/nanqinlang
 #=======================================
 # Secondary editing by dovela
-# Version: 2.0
+# Version: 2.1
 #=======================================
 ${Font_suffix}"
 
