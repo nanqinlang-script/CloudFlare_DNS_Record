@@ -162,7 +162,7 @@ Lightsail_conf(){
 
 lightsail_change_ip(){
     #检查本机ip是否被tcp阻断
-    tcp_status=`curl --silent https://ipcheck.need.sh/api_v2.php?ip=${local_ip}` | awk -F '[:}]' '{print $21}'
+    tcp_status=`curl --silent https://ipcheck.need.sh/api_v2.php?ip=${local_ip} | awk -F '[:}]' '{print $21}'`
     
     if [[ $tcp_status == "false" ]]; then
     # 删除现有静态IP
