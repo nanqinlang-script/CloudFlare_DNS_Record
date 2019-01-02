@@ -11,7 +11,9 @@ echo -e "${Green_font}
 # Github: https://github.com/nanqinlang
 #=======================================
 # Secondary editing by dovela
-# Version: 2.0
+# Version: 2.1 beta
+# Github: https://github.com/dovela/CloudFlare_DNS_Record
+# If you find problems, plz submit issue
 #=======================================
 ${Font_suffix}"
 
@@ -68,10 +70,11 @@ define(){
 	ttl=`cat ${ddns_conf} | grep "ttl" | awk -F "[ =]" '{print $2}'`
 
     local_ip=`curl ipv4.ip.sb`
-    
+
     lightsail_switch=`cat ${ddns_conf} | grep "lightsail_switch" | awk -F "[ =]" '{print $2}'`
     lightsail_ipname=`cat ${ddns_conf} | grep "lightsail_ipname" | awk -F "[ =]" '{print $2}'`
     lightsail_instance=`cat ${ddns_conf} | grep "lightsail_instance" | awk -F "[ =]" '{print $2}'`
+    check_times=`cat ${ddns_conf} | grep "check_times" | awk -F "[ =]" '{print $2}'`
 }
 
 choose_service(){
@@ -162,9 +165,18 @@ Lightsail_conf(){
 
 lightsail_change_ip(){
     #检查本机ip是否被tcp阻断
-    tcp_status=`curl --silent https://ipcheck.need.sh/api_v2.php?ip=${local_ip}` | awk -F '[:}]' '{print $21}'
-    
+    tcp_status=`curl --silent https://ipcheck.need.sh/api_v2.php?ip=${local_ip} | awk -F '[:}]' '{print $21}'`
+
     if [[ $tcp_status == "false" ]]; then
+        tcp_count=0
+        while [[ $tcp_conut -lt $check_times ]]
+        do
+            #如果false则多次检查确认,无true记录的话,更换ip,默认值4次
+            tcp_status=`curl --silent https://ipcheck.need.sh/api_v2.php?ip=${local_ip} | awk -F '[:}]' '{print $21}'`
+            [[ $tcp_status == "true" ]] && exit 0
+            tcp_conut=`expr ${tcp_conut} + 1`
+            sleep 2s
+        done
     # 删除现有静态IP
     aws lightsail release-static-ip --static-ip-name ${lightsail_ipname} >/dev/null 2>&1
     # 创建新IP
