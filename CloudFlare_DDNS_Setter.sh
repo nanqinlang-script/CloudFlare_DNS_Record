@@ -168,12 +168,12 @@ lightsail_change_ip(){
     tcp_status=`curl --silent https://ipcheck.need.sh/api_v2.php?ip=${local_ip} | awk -F '[:}]' '{print $21}'`
     if [[ $tcp_status == "false" ]]; then
         tcp_count=0
-        while [[ $tcp_conut -lt $check_times ]]
+        while [[ $tcp_count -lt $check_times ]]
         do
             #如果false则多次检查确认,无true记录的话,更换ip,默认值4次
             tcp_status=`curl --silent https://ipcheck.need.sh/api_v2.php?ip=${local_ip} | awk -F '[:}]' '{print $21}'`
             [[ $tcp_status == "true" ]] && exit 0
-            tcp_conut=`expr ${tcp_conut} + 1`
+            tcp_count=`expr ${tcp_count} + 1`
             sleep 2s
         done
     # 删除现有静态IP
