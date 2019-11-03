@@ -50,7 +50,7 @@ define(){
 	domain=`cat config.conf | grep "domain" | awk -F "=" '{print $NF}'`
 	ttl=`cat config.conf | grep "ttl" | awk -F "=" '{print $NF}'`
 
-	dynamic_ip=`curl members.3322.org/dyndns/getip`
+	dynamic_ip=`curl https://api.ipify.org/`
 }
 
 choose_service(){
